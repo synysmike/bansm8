@@ -21,12 +21,12 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('admin_theme/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('admin_theme/css/components.css') }}">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.4/css/buttons.dataTables.min.css">
 
     <link rel="stylesheet" href="{{ asset('/admin_theme/library/bootstrap-daterangepicker/daterangepicker.css') }}">
     <!-- Start GA -->
-    
+
     <!-- END GA -->
 </head>
 
@@ -36,7 +36,7 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3>{{ $judul }}</h3>
+                        <h3>{{ $judul }} tes ngegit</h3>
                     </div>
                     <div class="modal-body">
                         <div class="table-responsive">
@@ -75,14 +75,21 @@
                             </div>
                             <div class="card-body">
                                 <form id="id-form" enctype="multipart/form-data">
-                                    {!! $kategori !!}                                    
-                                    @if ($ass!==null)
-                                    <div class="form-group pb-3"> <label>Pilih Nama :</label> <select id="selectValue" name="nia_ass" class="form-control" required ><option value="">--Pilih Nama--</option> @foreach ($ass as $nama)<option value = "{{ $nama->nia }}">{{ $nama->nia }} {{ $nama->nama }}</option>@endforeach </select></div>
+                                    {!! $kategori !!}
+                                    @if ($ass !== null)
+                                        <div class="form-group pb-3"> <label>Pilih Nama :</label> <select
+                                                id="selectValue" name="nia_ass" class="form-control" required>
+                                                <option value="">--Pilih Nama--</option>
+                                                @foreach ($ass as $nama)
+                                                    <option value = "{{ $nama->nia }}">{{ $nama->nia }}
+                                                        {{ $nama->nama }}</option>
+                                                @endforeach
+                                            </select></div>
                                     @endif
                                     @foreach ($form as $key)
                                         {!! $key->tag_field !!}
                                     @endforeach
-                                    
+
                                     <div class='form-group'>
                                         <input required type='hidden' id='kat_dh' name='kat_dh'
                                             value="{{ $kat }}">
@@ -141,7 +148,7 @@
     </div>
     </div>
     <!-- General JS Scripts -->
-    
+
     <script src="{{ asset('admin_theme/library/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('admin_theme/library/popper.js/dist/umd/popper.js') }}"></script>
     <script src="{{ asset('admin_theme/library/tooltip.js/dist/umd/tooltip.js') }}"></script>
@@ -164,7 +171,7 @@
     <script src="{{ asset('admin_theme/library/selectric/public/jquery.selectric.min.js') }}"></script>
     <script src="{{ asset('admin_theme/library/jquery.pwstrength/jquery.pwstrength.min.js') }}"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.4/js/dataTables.buttons.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.print.min.js"></script>
@@ -176,7 +183,7 @@
     <script>
         $(document).ready(function() {
             $("#selectValue").select2({
-                placeholder : "Pilih nama | Ketikan nama/NIA anda Disini, lalu pilih nama anda"
+                placeholder: "Pilih nama | Ketikan nama/NIA anda Disini, lalu pilih nama anda"
             });
             "use strict";
             var cleavePN = new Cleave(".phone-number", {
@@ -200,22 +207,23 @@
                 // $('#btn-save').attr('disabled', true);                
             });
             $('number#title').attr('maxLength', '8').keypress(limitMe);
+
             function limitMe(e) {
                 if (e.keyCode == 8) {
                     return true;
                 }
                 return this.value.length < $(this).attr("maxLength");
             }
-            $(document).on('click', '.show-btn', function () {
+            $(document).on('click', '.show-btn', function() {
                 $('#id-form').trigger("reset");
                 $("#editModal-show").modal('show');
                 var data_id = $(this).data('id');
 
-                $.get("{{ $link }}/" + data_id, function (data) {
+                $.get("{{ $link }}/" + data_id, function(data) {
                     console.log(data.nama);
                 });
             });
-            
+
             $('#modal-2').click(function() {
                 $("#modal-show").modal('show');
                 // dynamic datatable
@@ -241,18 +249,32 @@
                         'type': 'GET'
                     },
                     // parsing nama columns
-                    'columns': columns
+                    'columns': columns,
+                    'bAutoWidth': false,
+                    'aoColumns': [{
+                            'sWidth': '15%'
+                        },
+                        // {
+                        //     'sWidth': '25%'
+                        // },
+                        // {
+                        //     'sWidth': '25%'
+                        // },
+                        // {
+                        //     'sWidth': '25%'
+                        // },
+                    ]
                 });
                 // console.log(table);
                 new $.fn.dataTable.Buttons(table, {
-                buttons: [
-                    'copy', 'csv','pdf'
-                ],
+                    buttons: [
+                        'copy', 'csv', 'pdf'
+                    ],
 
-            });
-            table.buttons(0, null).container().prependTo(
-                table.table().container()
-            );
+                });
+                table.buttons(0, null).container().prependTo(
+                    table.table().container()
+                );
                 var oTable = $("#table-1").dataTable();
                 oTable.fnDraw(false);
             });

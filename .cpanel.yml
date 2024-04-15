@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/bansmpro/public_html/form.bansmprovjatim.com/
+    - /bin/cp index.html $DEPLOYPATH
+    - /bin/cp style.css $DEPLOYPATH
